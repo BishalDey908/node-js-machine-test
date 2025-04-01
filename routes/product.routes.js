@@ -1,9 +1,10 @@
-const { updateProductController, productPriceController, ProductAccordingToPriceController, highestPriceInEachCatagoryController } = require("../controller/product.controller")
+const { updateProductController, productPriceController, ProductAccordingToPriceController, highestPriceInEachCatagoryController, createProductController } = require("../controller/product.controller")
 const Product = require('../model/productModel.model');
 
 const Router = require("express")
 const router = Router()
 
+router.post("/createProduct",createProductController)
 router.post("/updateProduct/:id",updateProductController)
 router.get("/productPrice",productPriceController)
 router.get("/getProductByPrice",ProductAccordingToPriceController)

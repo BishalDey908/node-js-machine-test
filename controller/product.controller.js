@@ -1,4 +1,18 @@
-const { updateProductService, ProductPriceService, ProductAccordingToPricerangeService, highestPriceInEachCatagoryService } = require("../services/product.service")
+const { updateProductService, ProductPriceService, ProductAccordingToPricerangeService, highestPriceInEachCatagoryService, createProductService } = require("../services/product.service")
+
+const createProductController = async(req,res) =>{
+  const productDetails = req.body
+  try{
+     const createProduct = await createProductService(productDetails)
+     console.log(createProduct)
+     if(createProduct){
+         res.status(200).json({message:"product created successful",data:createProduct})
+      }
+  }catch(error){
+    console.log(error)
+      res.status(400).json({message:"product creation failed",error:createProduct.message})
+  }
+} 
 
 const updateProductController = async(req,res) =>{
     const productId = req.params.id
@@ -47,6 +61,7 @@ const ProductAccordingToPriceController = async(req,res) =>{
  }
 
 module.exports = {
+  createProductController,
     updateProductController,
     productPriceController,
     ProductAccordingToPriceController,

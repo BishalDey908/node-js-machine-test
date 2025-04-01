@@ -1,5 +1,15 @@
 const productModel = require("../model/productModel.model")
 
+const createProductService = async(productDetails)=>{
+  const {productName,description,image,categoryId,images,price,pvValue}=productDetails
+  try{
+   const product = await productModel?.create({productName,description,image,categoryId,images,price,pvValue})
+   return product
+  }catch(error){
+    return new error ({message:"product creation failed"})
+  }
+}
+
 const updateProductService = async(productId,productDetails)=>{
    try{
     const product = await productModel?.findOneAndUpdate({_id:productId},productDetails,{new:true})
@@ -157,6 +167,7 @@ const ProductPricerangePipeline = [
 
 
 module.exports = {
+  createProductService,
     updateProductService,
     ProductPriceService,
     ProductAccordingToPricerangeService,

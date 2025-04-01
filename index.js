@@ -2,13 +2,15 @@ require("dotenv").config()
 const express = require("express")
 const app = express()
 const userModel = require("./model/userModel.model")
-const productModel = require("./model/productModel.model")
 const productRouter = require("./routes/product.routes")
+const userRouter = require("./routes/user.routes")
+const PORT = process.env.PORT || 2000
 require("./db/mongoose.db")
 
 app.use(express.json())
 
 app.use("/api",productRouter)
+app.use("/api",userRouter)
 
 app.post("/api/userCreation",async(req,res)=>{
     const {firstName,lastName,email,userName,password,phoneNumber,address,dateOfBirth,isActive,role,profileImage}=req?.body
@@ -21,17 +23,8 @@ app.post("/api/userCreation",async(req,res)=>{
     console.log("User created")
 })
 
-app.post("/api/productCreation",async(req,res)=>{
-    const {productName,description,image,categoryId,images,price,pvValue}=req?.body
-    try{
-        const creation = await productModel?.create({productName,description,image,categoryId,images,price,pvValue})
-        res?.status(200)?.json({message: "product created success", data:creation})
-    }catch(error){
-        res?.status(400)?.json({message: "product creation failed", data:error})
-    }
-    console.log("product created")
-})
 
-app.listen("3000",()=>{
+
+app.listen(PORT,()=>{
     console.log("server is running on port 3000")
 })
